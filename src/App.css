@@ -1,7 +1,7 @@
 .App {
   text-align: center;
 }
-
+/* 
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -35,4 +35,69 @@
   to {
     transform: rotate(360deg);
   }
+} */
+form{
+  border-color:  grey;
+   border:10px;
+   border-spacing: 5px;
+}
+
+h2{
+  vertical-align: middle;
+  align-content: center;
+  text-align: center;
+  height:50px;
+  border:1px;
+	background : lightskyblue;
+}
+.input{
+  text-align: center;
+}
+table,tr,td,th {
+  border-spacing: 5px;
+  border: 5px solid rgb(204, 201, 201);
+  text-align: center;
+  max-width: 100%;
+  min-width: 95%;
+}
+td{
+  text-align: center;
+  height: 50px;
+  border:none;
+}
+
+.upload{
+  text-align: center;
+  padding: 6px 23px;
+  background: #3f4257;
+  border-radius: 30px;
+  color: white;
+  font-weight: 300;
+  font-size: 14px;
+  margin: 10px 0;
+  transition: all 0.2s ease-in;
+  cursor: pointer;
+  outline: none;
+  border: none;
+
+} 
+
+.covidDetails{
+   display:none; 
+  text-align: center;
+  border:1px;
+}
+img{
+  height: 200px;
+}
+
+.button {
+  text-align: center;
+  padding: 6px 23px;
+  background: #3f4257;
+  color:white;
+  border-radius:10px;
+  width:200px;
+  height:30px;
+  text-emphasis: bold;
 }
