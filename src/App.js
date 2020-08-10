@@ -39,7 +39,7 @@ class App extends React.Component {
   
   this.setState({ responseToPost: body }); */
 
-  handleSubmit= event => {
+
    // Create an object of formData 
   /*  const formData = new FormData(); 
      
@@ -70,7 +70,7 @@ class App extends React.Component {
     console.log(res.statusText)
   }) */
 
-
+  handleSubmit= event => {
   let imageDetails={
     image:this.state.image,
     xray:this.state.xray
@@ -187,7 +187,7 @@ onDropXray= picture => {
                 <div  className="covidDetails" display="{this.state.display}===1 ? true :false" >
                 <table>
                   <thead>
-                    <tr align="center" colSpan="2"><td>Covid Report</td></tr>
+                    <tr align="center" colSpan="2"><td><h2>Covid Report</h2></td></tr>
                   </thead>
                   <tbody>
                     <tr>
