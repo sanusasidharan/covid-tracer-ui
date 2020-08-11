@@ -1,182 +1,185 @@
 import React from 'react';
 import './App.css';
-import axios from 'axios';
 import './index.css';
-import ImageUploader from 'react-images-upload';
-
+import axios from'axios';
 
 class App extends React.Component {
   constructor(props){
     super(props);
+
     this.state = {
       image: null,
       xray :null,
-      response: '',
-      post: '',
-      responseToPost: '',
-      defaultImage: null,
+      imageUrl: null,
+      xrayUrl :null,
       name: null,
       score:null,
       temperature:null,
       xray_result:null,
       covid_result:null,
-      display:0
-
+      display:false,
+      displayError:false,
+      errorMessage:null
     }
-    this.onDropImage = this.onDropImage.bind(this);
-    this.onDropXray = this.onDropXray.bind(this);
+
+    this.imageRef = React.createRef()
+    this.xrayRef = React.createRef()
+    this.handleChangeImage = this.handleChangeImage.bind(this)
+    this.handleChangeXray = this.handleChangeXray.bind(this)
+    this.handleChangeXray = this.handleChangeXray.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleReset = this.handleReset.bind(this)
 }
-//handleSubmit= async event => {
-  /* event.preventDefault();
-  const response = await fetch('/api/world', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ image: this.state.image ,xray:this.state.xray }),
-  });
-  const body = await response.text();
-  
-  this.setState({ responseToPost: body }); */
 
+handleSubmit= event => {
+  event.preventDefault();
 
-   // Create an object of formData 
-  /*  const formData = new FormData(); 
-     
-   // Update the formData object 
-   formData.append( 
-     "image", 
-     this.state.image
-   ); 
-   formData.append( 
-    "xray", 
-    this.state.xray
-  );  */
+  let formData= new FormData();
+  formData.append("image",  this.state.image); 
+  formData.append("xray",  this.state.xray);
   
-  
-   // Request made to the backend api 
-   // Send formData object 
-   //axios.post("api/uploadfile", formData); 
-
- /*   axios.post("http://localhost:8000/uploadImage", formData, { // receive two parameter endpoint url ,form data 
-   onUploadProgress: ProgressEvent => {
+  axios.post('http://localhost:8000/uploadImage', formData,)
+      .then(res => { 
+        // then set response data
+        console.log(res.data);
+        console.log(res.statusText);
+        this.setState({
+          name:res.data.name,
+          score:res.data.score,
+          xray_result:res.data.xrayresult,
+          temperature:res.data.temperature,
+          covid_result:res.data.covidresult,
+          display:true,
+          displayError:false,
+          
+      });
+      //set error message
+      if(res.data.errorMessage!==null && res.data.errorMessage!==undefined){
+        console.log("in errorMessage response:");
+        this.setState({
+          errorMessage:res.data.errorMessage,
+          display:false,
+          displayError:true,
+      });} 
+  }).catch(error => {
+    console.log(error);
     this.setState({
-      loaded: (ProgressEvent.loaded / ProgressEvent.total*100),
-  })
-},
-  })
-  .then(res => { // then print response status
-    alert(res.statusText);
-    console.log(res.statusText)
-  }) */
-
-  handleSubmit= event => {
-  let imageDetails={
-    image:this.state.image,
-    xray:this.state.xray
-
-  }
-  axios.post("http://localhost:8080/", imageDetails)
-    .then(res => res.json)
-      .then(json=> { 
-          alert(json.data.temperature);
-          this.setState({
-              name:json.data.name,
-              score:json.data.score,
-              xray_result:json.data.xrayresult,
-              temperature:json.data.temperature,
-              covid_result:json.data.covidresult,
-              display:1
-   })
- })
+      display:false,
+      errorMessage:error,
+      displayError:true, });
+    });
+console.log("displayError:"+this.state.displayError);
+console.log("display:"+this.state.display);
 }
 
+ validateFileType = file => {
+  const types = ['image/jpg', 'image/jpeg']
+
+  if(types.every(type => file.type!==type)){
+    alert("File is not a supported format! Only images in jpg/jpeg format supported");  
+    return false;
+  }
+  return true;
+} 
+
+handleChangeXray= event => {
+  const file = event.target.files[0];
+  
+  if(file!==undefined){
+    if(this.validateFileType(file)){
+      this.setState({
+        xray: file,
+        xrayUrl:URL.createObjectURL(file)
+      })
+    }
+    else{
+      this.setState({
+        xray: null,
+        xrayUrl: null
+      })
+    }
+  }
+}
+
+handleChangeImage = event => {
+  const file = event.target.files[0];
+
+  if(file!==undefined){
+    if(this.validateFileType(file)){
+      this.setState({
+        image: file,
+        imageUrl:URL.createObjectURL(file)
+      })
+    } else{
+      this.setState({
+        image: null,
+        imageUrl: null
+      })
+    }
+  }
+  
+
+}
 
 handleReset = event => {
   this.setState({
       image: null,
       xray :null,
-      response: '',
-      post: '',
-      responseToPost: '',
-      loaded: 0,
+      imageUrl: null,
+      xrayUrl :null,
       name: null,
       score:null,
       temperature:null,
       xray_result:null,
       covid_result:null,
-      display:0
+      display:false,
+      displayError:false,
+      errorMessage:null
+
   })
-}
-
-onDropImage= picture => {
-  if(picture.length===0){
-    this.setState({
-      image: this.state.defaultImage
-   });
-  }else{
-    this.setState({
-      image: picture
-   });
-  }
-}
-
-onDropXray= picture => {
-  if(picture.length===0){
-    this.setState({
-      xray: this.state.defaultImage
-   });
-  }else{
-    this.setState({
-      xray: picture
-   });
-  }
 }
 
 	render() {  
 	    return (
 		          <form><h2>COVID TRACER</h2>
                 <table>
- 
+                  <thead>
+                    <tr>
+                      <td>
+                        <img src={this.state.imageUrl} size='10x' alt=""/>
+                      </td>
+                      <td>
+                        <img src={this.state.xrayUrl} size='10x' alt=""/>
+                      </td>
+                    </tr>
+                  </thead>
                   <tbody>
                     <tr>                    
                         <td>
-                          <ImageUploader
-                        withIcon={true}
-                        withPreview={true}
-                        buttonText="Upload Image"
-                        onChange={this.onDropImage}
-                        value={this.state.image}
-                        imgExtension={[".jpg", ".jpeg"]}
-                        maxFileSize={1048576}
-                        fileSizeError=" file size is too big"
-                        withLabel={true}
-                        label="Max file size: 5mb, accepted: jpg"
-                        fileTypeError= " is not supported file extension"
-                        singleImage={true}
-                      />
+                          <input id="image"
+                            style={{display:'none'}}
+                          className="input"  
+                          type="file" 
+                          ref={imageRef=> this.imageRef = imageRef} 
+                          onChange={this.handleChangeImage} 
+                          accept="image/*"/>
                       </td>
-
-                      <td>
-                        <ImageUploader
-                        withIcon={true}
-                        withPreview={true}
-                        value={this.state.xray}
-                        buttonText="Upload X-Ray"
-                        onChange={this.onDropXray}
-                        imgExtension={[".jpg", ".jpeg"]}
-                        maxFileSize={1048576}
-                        fileSizeError=" file size is too big"
-                        withLabel={true}
-                        label="Max file size: 5mb, accepted: jpg"
-                        fileTypeError= " is not supported file extension"
-                        singleImage={true}
-                      />   
+                      <td>                       
+                        <input id="xray"  
+                        style={{display:'none'}} 
+                        type="file" 
+                        ref={xrayRef=> this.xrayRef = xrayRef} 
+                        onChange={this.handleChangeXray} 
+                        accept="image/*"/>                       
                       </td>
+                    </tr>
+                    <tr>
+                      <td><label htmlFor="image" className="upload" >Upload Image</label></td>
+                      <td><label htmlFor="xray" className="upload" >Upload X-Ray</label></td>                   
                     </tr>
                     </tbody>
                 </table>
-                <table>
+                <table className="buttons">
                   <tbody>
                     <tr>
                       <td><input id="submitbutton" className="button" type="submit"  onClick = {this.handleSubmit} value="SUBMIT" disabled={(this.state.xray ===null || this.state.image === null) ? true : false} /> </td>    
@@ -184,35 +187,47 @@ onDropXray= picture => {
                     </tr>
                   </tbody>
                 </table>
-                <div  className="covidDetails" display="{this.state.display}===1 ? true :false" >
-                <table>
-                  <thead>
-                    <tr align="center" colSpan="2"><td><h2>Covid Report</h2></td></tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>Name : </td>
-                      <td>{this.state.name}</td>
-                    </tr>
-                    <tr>
-                      <td>Score : </td>
-                      <td>{this.state.score}</td>
-                    </tr>
-                    <tr>
-                      <td>Temperature : </td>
-                      <td>{this.state.temperature}</td>
-                    </tr>
-                    <tr>
-                      <td>X-ray Result : </td>
-                      <td>{this.state.xray_result} </td>
-                    </tr>
-                    <tr>
-                      <td>Covid Result : </td>
-                      <td>{this.state.covid_result}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+                { this.state.display ?  
+                    <div  className="covidDetails" >
+                    <table>
+                      <thead>
+                        <tr>
+                          <td colSpan="3"><h2>Covid Report</h2></td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Name </td>
+                          <td> : </td>
+                          <td>{this.state.name}</td>
+                        </tr>
+                        <tr>
+                          <td>Score </td>
+                          <td> : </td>
+                          <td>{this.state.score}</td>
+                        </tr>
+                        <tr>
+                          <td>Temperature </td>
+                          <td> : </td>
+                          <td>{this.state.temperature}</td>
+                        </tr>
+                        <tr>
+                          <td>X-ray Result </td>
+                          <td> : </td>
+                          <td>{this.state.xray_result} </td>
+                        </tr>
+                        <tr>
+                          <td>Covid Result </td>
+                          <td> : </td>
+                          <td>{this.state.covid_result}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div> 
+                : null }
+              { this.state.displayError ? 
+                    <div className="errorDetails"><h3>{this.state.errorMessage}</h3></div> 
+                : null}
             </form>);
 	  
         	}
