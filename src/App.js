@@ -37,8 +37,8 @@ handleSubmit= event => {
   let formData= new FormData();
   formData.append("image",  this.state.image); 
   formData.append("xray",  this.state.xray);
-  
-  axios.post('http://localhost:8000/uploadImage', formData,)
+  const BFF_ENDPOINT = process.env.BFF_ENDPOINT || "http://localhost:8000/";
+  axios.post(BFF_ENDPOINT+'uploadImage', formData,)
       .then(res => { 
         // then set response data
         console.log(res.data);
