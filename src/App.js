@@ -37,7 +37,7 @@ handleSubmit= event => {
   let formData= new FormData();
   formData.append("image",  this.state.image); 
   formData.append("xray",  this.state.xray);
-  const BFF_ENDPOINT = process.env.BFF_ENDPOINT || "http://localhost:8000/";
+  const BFF_ENDPOINT = process.env.BFF_ENDPOINT || "http://covid-tracer-bff-git-covid-tracker.sandbox-ocp431-one-89dadfe96916fcd27b299431d0240c37-0000.eu-gb.containers.appdomain.cloud/";
   axios.post(BFF_ENDPOINT+'uploadImage', formData,)
       .then(res => { 
         // then set response data
