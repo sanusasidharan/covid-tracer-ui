@@ -10,4 +10,8 @@ COPY . .
 
 EXPOSE 3000
 
+#USER root
+
+RUN chown -R $USER:$(id -gn $USER) /.config
+
 CMD [ "npm", "start" ]
