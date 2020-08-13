@@ -25,11 +25,6 @@ input[type="submit"]:disabled {
   color:grey;
 }
 
-input[type="submit"]:enabled {
-  background: grey;
-
-}
-
 table,tr,td,th {
   margin-left: auto;
   margin-right: auto;
