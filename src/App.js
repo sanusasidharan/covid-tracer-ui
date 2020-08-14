@@ -37,6 +37,7 @@ handleSubmit= event => {
   let formData= new FormData();
   formData.append("image",  this.state.image); 
   formData.append("xray",  this.state.xray);
+
   const BFF_ENDPOINT = "http://covid-tracer-bff-node-covid-tracker.sandbox-ocp431-one-89dadfe96916fcd27b299431d0240c37-0000.eu-gb.containers.appdomain.cloud/";
   axios.post(BFF_ENDPOINT+'uploadImage', formData,)
       .then(res => { 
@@ -74,11 +75,17 @@ console.log("display:"+this.state.display);
 
  validateFileType = file => {
   const types = ['image/jpg', 'image/jpeg']
-
+  
+  if(file.size> 1000000){
+    alert("File is too large .Please upload file less than 1 MB ");  
+    return false;
+  }
+  
   if(types.every(type => file.type!==type)){
     alert("File is not a supported format! Only images in jpg/jpeg format supported");  
     return false;
   }
+
   return true;
 } 
 
