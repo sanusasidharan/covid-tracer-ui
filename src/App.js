@@ -74,7 +74,7 @@ console.log("display:"+this.state.display);
 }
 
  validateFileType = file => {
-  const types = ['image/jpg', 'image/jpeg']
+  const types = ['image/jpg', 'image/jpeg', 'image/png']
   
   if(file.size> 1000000){
     alert("File is too large .Please upload file less than 1 MB ");  
@@ -82,7 +82,7 @@ console.log("display:"+this.state.display);
   }
   
   if(types.every(type => file.type!==type)){
-    alert("File is not a supported format! Only images in jpg/jpeg format supported");  
+    alert("File is not a supported format! Only images in jpg/jpeg/png format supported");  
     return false;
   }
 
