@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+  
+  <title>Welcome to CovidTrackometer</title>
+  <style>
+    .submitbtn{
+      margin-left: 414px !important;
+      background-color: green;
+    }
+    .submitbtnn{
+      margin-left: 414px !important;
+     
+    }
+    .file-field input.file-path{
+      width: 50%;
+    }
+   .fullborder{
+     background-color:aquamarine;  
+   }
+  </style> 
+ <script type="text/javascript">
+  window.history.forward();
+  function noBack(){
+    window.history.forward();
+  }
+      
+      </script> 
+</head>
+<body class="fullborder" >
+  
+  
+  <div class="container">
+    <h1 style="text-align:center;color:blue" > Welcome to Covid Tracker</h1>
+    
+    <form action="/uploadImage" method="POST" enctype="multipart/form-data">
+      <div class="file-field input-field">
+        <div class="btn blue" disabled>
+          <span>Upload Image</span>
+          <input name="myGRBImage" type="file">
+        </div>
+        <div class="file-path-wrapper" disabled>
+          <input  type="text" disabled>
+        </div>
+      </div>
+    
+    <button id="button1" type="button" class="submitbtnn" disabled > Submit</button>
+      
+    
+    </form>
+    
+  </div>
+</br>
+</br>
+
+  <img src="<%= typeof file != 'undefined' ? file : '' %>" class="responsive-img upload"></img>&nbsp;&nbsp;
+  
+  <%= typeof msg != 'undefined' ? msg : '' %>
+
+  <div>
+    
+    <form action="/upload/process" method="POST">
+      
+      <div class="file-field input-field">
+        <button id="button2" type="submit" class="submitbtn" >Process Image</button>
+      <input type=text name=fname value="<%= typeof filename != 'undefined' ? filename : '' %>" style="visibility:hidden;"/>
+      <input type=text name=hbeat value="<%= typeof HeartBeat != 'undefined' ? HeartBeat : '' %>" style="visibility:hidden;"/>
+      <input type=text name=bpm value="<%= typeof Bpm != 'undefined' ? Bpm : '' %>" style="visibility:hidden;"/>
+     <!-- <input type=text name=fname value="<%= typeof oxyrate != 'undefined' ? oxyrate : '' %>" style="visibility:hidden;"/>
+      <input type=text name=fname value="<%= typeof csvLoc != 'undefined' ? csvLoc : '' %>" style="visibility:hidden;"/>
+      
+-->
+    </div>
+    </form>
+        
+
+  </div>
+
+  <div>
+    
+    <form action="/uploadanother" method="POST">
+      
+      <div class="file-field input-field">
+      
+      <button id="button2" type="submit" class="submitbtn" >Upload Another Image</button>
+
+    </div>
+    </form>
+        
+
+  </div>
+
+  
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script> 
+  
+</body>
+</html>

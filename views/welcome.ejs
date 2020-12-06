@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+  <title>Welcome to CovidTrackometer</title>
+  <style>
+    .submitbtn{
+      margin-left: 414px !important;
+      background-color: green;
+    }
+    
+    .file-field input.file-path{
+      width: 50%;
+    }
+   .fullborder{
+     background-color:aquamarine;
+     
+   }
+   .upload{
+margin-left: 172px;
+   }
+   ::placeholder{
+     color: black;
+   }
+   
+
+  </style> 
+   <script type="text/javascript">
+window.history.forward();
+function noBack(){
+  window.history.forward();
+}
+    
+    </script> 
+</head>
+<body class="fullborder">
+  
+  <%= typeof msg != 'undefined' ? msg : '' %>
+  
+  <div class="container">
+    <h1 style="text-align:center;color:blue" > Welcome to Covid Tracker</h1>
+    
+    <form action="/uploadImage" method="POST" enctype="multipart/form-data">
+      <div class="file-field input-field">
+        <div class="btn blue upload">
+           <span>Upload Video</span>
+          <input name="Image" type="file">
+        </div>
+        <div class="file-path-wrapper">
+          <input class="file-path validate " placeholder="Upload your Video here"  type="text">
+        </div>
+        
+      </div>
+      <button id="button1" type="submit" class="submitbtn" > Submit</button>
+    
+      
+    
+    </form>
+    
+  </div>
+</br>
+</br>
+  <img src="<%= typeof file != 'undefined' ? file : '' %>" class="responsive-img"></img>
+
+  
+  <button id="button1" type="submit" class="submitbtn" style="visibility:hidden;"> Submit</button>
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script> 
+  
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <title>Welcome to CovidTrackometer</title>
+  <style>
+    .submitbtn{
+      margin-left: 414px !important;
+      background-color: green;
+    }
+   
+  
+   .fullborder{
+     background-color:aquamarine;
+     
+   }
+   .msg1{
+     font-size: 15px;
+    
+   }
+
+  </style> 
+  <script type="text/javascript">
+    window.history.forward();
+    function noBack(){
+      window.history.forward();
+    }
+        
+        </script> 
+</head>
+<body class="fullborder">
+  
+  
+  
+    <h1 style="text-align:center;color:blue"> Covid Report</h1>
+    <br>
+  </br>
+</br>
+</br>
+<div class="row">
+  <div class="col-sm-4">
+<img src="<%= typeof file != 'undefined' ? file : '' %>" class="responsive-img upload"></img>
+</div>
+<div class="col-sm-4 msg1">
+  <span><strong>Identified person : </strong><%= typeof Name != 'undefined' ? Name : '' %> </span><br>
+  <span><strong>Score : </strong><%= typeof Score != 'undefined' ? Score : '' %> </span><br>
+  <span><strong>Temperature : </strong><%= typeof Temperature != 'undefined' ? Temperature : '' %> </span><br>
+  <span><strong>HeartBeat : </strong><%= typeof HeartBeat != 'undefined' ? HeartBeat : '' %> </span><br>
+  <span><strong>OxygenRate : </strong><%= typeof OxygenRate != 'undefined' ? OxygenRate : '' %> </span><br>
+  <span><strong>Result : </strong><%= typeof msg != 'undefined' ? msg : '' %> </span><br><br>
+  
+</div>
+<br>
+</div>
+<%= typeof filename != 'undefined' ? filename : '' %>
+<div>
+  
+  
+    
+    <form action="/" method="POST" enctype="multipart/form-data">
+      
+    &nbsp;&nbsp;<button id="button1" type="submit" class="submitbtn" style="text-align:center"> Home</button>
+      
+    
+    </form>
+    
+  </div>
+
+
+  
+ 
+</body>
+</html>
